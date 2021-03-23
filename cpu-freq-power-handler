@@ -1,0 +1,25 @@
+#Intended to set CPU freqency mode to performance if the power is plugged in and powersave if running on battery
+#Script designed for Thinkpad X1 Carbon Gen 8 with Ubuntu 20.04
+
+#################
+### ChangeLog ###
+# Mar 23, 2021 - Created Script
+#################
+
+#################
+# How to use ####
+# Save this script to /usr/local/bin
+# Make it executable with chmod +x <script/path>
+# Add to Crontab to execute at whatever frequency you wish
+# Example crontab syntax for every 5 minutes with logging to /tmp/
+#    */5 *   * * *   root    cpu-freq-power-handler >> /tmp/cpu-freq-power-handler-cron.log 
+#################
+echo $(date)
+if on_ac_power; then
+	echo "On power, setting performance mode"
+	cpupower frequency-set --governor performance
+else
+	echo "Not on power"
+	cpupower frequency-set --governor powersave
+fi
+echo "###########################"
